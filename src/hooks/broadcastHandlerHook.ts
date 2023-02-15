@@ -27,7 +27,7 @@ export const useBroadcastHandlerHook = () => {
         }
       ) => void
     ) => {
-      broadcastChannel.onmessage = (message) => {
+      broadcastChannel.onmessage = (message: WilayahBroadcastMessage) => {
         const messageData = message.data as WilayahBroadcastMessage;
 
         if (messageData.senderId === broadcasterWindowId) return;
@@ -51,7 +51,7 @@ export const useBroadcastHandlerHook = () => {
         messageData
       );
 
-      broadcastChannel.postMessage({
+      void broadcastChannel.postMessage({
         message,
         senderId: broadcasterWindowId,
         ...messageData,
