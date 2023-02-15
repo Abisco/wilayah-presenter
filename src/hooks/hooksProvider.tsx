@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { BroadcastChannel } from "broadcast-channel";
 import type { SetStateAction } from "react";
 import { createContext, useState } from "react";
 import type { SettingsType } from "./useSettings";
