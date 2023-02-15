@@ -5,7 +5,7 @@ import { useVerseData } from "../../hooks/useVerseData";
 import { Combobox } from "../Combobox/Combobox";
 import { OptionsBox } from "../OptionsBox/OptionsBox";
 
-export const VerseOptions = ({}) => {
+export const VerseOptions = () => {
   const [surah, setSurah] = React.useState(1);
   const [ayah, setAyah] = React.useState(1);
   const [currentAyahs, setCurrentAyahs] = React.useState(
