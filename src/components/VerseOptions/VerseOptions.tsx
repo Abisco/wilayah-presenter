@@ -77,7 +77,7 @@ export const VerseOptions = ({}) => {
       !e.shiftKey
     ) {
       const activeElement = document.activeElement;
-      const inputs = ["input", "select", "button", "textarea"];
+      const inputs = ["input", "select", "textarea"];
 
       const focusedInputs =
         activeElement &&
