@@ -4277,7 +4277,7 @@ braces@^3.0.2, braces@~3.0.2:
 
 broadcast-channel@^4.20.2:
   version "4.20.2"
-  resolved "https://registry.npmjs.org/broadcast-channel/-/broadcast-channel-4.20.2.tgz"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-4.20.2.tgz#34c639251dfc586da7c8c1d6b2418dafa9568ae0"
   integrity sha512-v0lJgMzC+MX4e2KCFWYXChZ2mKTqm5mnJGId6tqJp3NfylggbNd8c2uKeP4MQxD2ucKOesY68aN98zwl9d6Tvg==
   dependencies:
     "@babel/runtime" "7.20.7"
