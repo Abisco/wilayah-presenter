@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Language {
+    ARABIC
+    ENGLISH
+    URDU
+    FRENCH
+}
+
+model Verse {
+    id        Int      @id @default(autoincrement())
+    overallVerseNumber Int
+    surahNumber     Int
+    verseNumber     Int
+    text      String
+    language  Language
+    source    String
+    transliteration Boolean @default(false)
+
+    @@unique([source, overallVerseNumber])
+}
+
+enum SurahType {
+    MAKKAH
+    MADINAH
+}
+
+model QuranIndex {
+    id        Int      @id @default(autoincrement())
+    surahNumber     Int
+    surahNameArabic String
+    surahNameTransliteration String
+    surahNameEnglish String
+    versesCount Int
+    type SurahType // Medinan or Makkan
+}
