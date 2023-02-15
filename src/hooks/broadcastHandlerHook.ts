@@ -50,7 +50,7 @@ export const useBroadcastHandlerHook = () => {
         messageData
       );
 
-      void broadcastChannel.postMessage({
+      broadcastChannel.postMessage({
         message,
         senderId: broadcasterWindowId,
         ...messageData,
