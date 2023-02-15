@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { BroadcastChannel } from "broadcast-channel";
+import type { BroadcastChannel as BroadcastChannelType } from "broadcast-channel";
 import type { SetStateAction } from "react";
 import { createContext, useState } from "react";
 import type { SettingsType } from "./useSettings";
@@ -43,7 +44,7 @@ export const HookContext = createContext<{
   setCurrentVerseData: (
     currentVerseData: SetStateAction<CurrentVerseDataType>
   ) => void;
-  broadcastChannel: BroadcastChannel;
+  broadcastChannel: BroadcastChannelType;
   broadcasterWindowId: string;
 }>({
   settings: DefaultSettings,

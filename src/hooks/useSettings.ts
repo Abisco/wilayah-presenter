@@ -51,18 +51,11 @@ export const useSettings = () => {
   };
 
   const getSources = useCallback(() => {
-    if (!settings) {
-      return [];
-    }
     const sources = [];
-    if (settings.showArabic) {
-      sources.push(settings.arabicSource);
-    }
-    if (settings.showTranslation) {
-      sources.push(settings.translationSource);
-    }
+    sources.push(settings.arabicSource);
+    sources.push(settings.translationSource);
     return sources;
-  }, [settings]);
+  }, [settings.arabicSource, settings.translationSource]);
 
   return {
     settings,
