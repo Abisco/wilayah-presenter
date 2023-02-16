@@ -56,7 +56,10 @@ export const HookContext = createContext<{
     nextVerse: undefined,
   },
   setCurrentVerseData: () => {},
-  broadcastChannel: new BroadcastChannel("wilayah-presenter-handler"),
+  broadcastChannel: new BroadcastChannel("wilayah-presenter-handler", {
+    webWorkerSupport: false,
+    type: "simulate",
+  }),
   broadcasterWindowId: "",
 });
 
