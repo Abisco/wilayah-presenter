@@ -56,9 +56,7 @@ export const HookContext = createContext<{
     nextVerse: undefined,
   },
   setCurrentVerseData: () => {},
-  broadcastChannel: new BroadcastChannel("wilayah-presenter-handler", {
-    type: "native",
-  }),
+  broadcastChannel: new BroadcastChannel("wilayah-presenter-handler"),
   broadcasterWindowId: "",
 });
 
@@ -74,9 +72,7 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
       nextVerse: undefined,
     });
 
-  const broadcastChannel = new BroadcastChannel("wilayah-presenter-handler", {
-    type: "native",
-  });
+  const broadcastChannel = new BroadcastChannel("wilayah-presenter-handler");
   const [broadcasterWindowId] = useState<string>(
     "private-" + Math.random().toString()
   );
