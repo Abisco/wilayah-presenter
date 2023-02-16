@@ -27,12 +27,11 @@ export const useBroadcastHandlerHook = () => {
         }
       ) => void
     ) => {
-      broadcastChannel.onmessage = (message) => {
-        const messageData = message?.data as WilayahBroadcastMessage;
-        if (messageData?.senderId === broadcasterWindowId) return;
+      broadcastChannel.onmessage = (message: WilayahBroadcastMessage) => {
+        if (message?.senderId === broadcasterWindowId) return;
 
-        console.log("Received broadcast message: ", messageData);
-        callback(messageData?.message, messageData);
+        console.log("Received broadcast message: ", message);
+        callback(message?.message, message);
       };
     },
     [broadcasterWindowId]
@@ -50,7 +49,7 @@ export const useBroadcastHandlerHook = () => {
         messageData
       );
 
-      broadcastChannel.postMessage({
+      void broadcastChannel.postMessage({
         message,
         senderId: broadcasterWindowId,
         ...messageData,
