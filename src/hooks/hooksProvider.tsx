@@ -73,7 +73,8 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
   const broadcastChannel = new BroadcastChannel("wilayah-presenter-handler", {
-    type: "localstorage",
+    webWorkerSupport: false,
+    type: "simulate",
   });
   const [broadcasterWindowId] = useState<string>(
     "private-" + Math.random().toString()
