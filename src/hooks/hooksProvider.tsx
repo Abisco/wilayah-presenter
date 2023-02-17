@@ -43,7 +43,6 @@ export const HookContext = createContext<{
   setCurrentVerseData: (
     currentVerseData: SetStateAction<CurrentVerseDataType>
   ) => void;
-  broadcastChannel: BroadcastChannel;
   broadcasterWindowId: string;
 }>({
   settings: DefaultSettings,
@@ -56,10 +55,6 @@ export const HookContext = createContext<{
     nextVerse: undefined,
   },
   setCurrentVerseData: () => {},
-  broadcastChannel: new BroadcastChannel("wilayah-presenter-handler", {
-    webWorkerSupport: false,
-    type: "simulate",
-  }),
   broadcasterWindowId: "",
 });
 
@@ -75,10 +70,6 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
       nextVerse: undefined,
     });
 
-  const broadcastChannel = new BroadcastChannel("wilayah-presenter-handler", {
-    webWorkerSupport: false,
-    type: "simulate",
-  });
   const [broadcasterWindowId] = useState<string>(
     "private-" + Math.random().toString()
   );
@@ -92,7 +83,6 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
         setCurrentVerseNumber,
         currentVerseData,
         setCurrentVerseData,
-        broadcastChannel,
         broadcasterWindowId,
       }}
     >

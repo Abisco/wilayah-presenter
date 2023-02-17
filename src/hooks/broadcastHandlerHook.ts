@@ -1,5 +1,6 @@
 import { useCallback, useContext } from "react";
 import { HookContext } from "./hooksProvider";
+import { BroadcastChannel } from "broadcast-channel";
 
 type AcceptableBroadcastData =
   | "verseNumberChange"
@@ -15,8 +16,10 @@ interface WilayahBroadcastMessage {
   [key: string]: unknown;
 }
 
+const broadcastChannel = new BroadcastChannel("wilayah-broadcast-channel");
+
 export const useBroadcastHandlerHook = () => {
-  const { broadcastChannel, broadcasterWindowId } = useContext(HookContext);
+  const { broadcasterWindowId } = useContext(HookContext);
 
   const instantiateBroadcastHandler = useCallback(
     (
