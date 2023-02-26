@@ -23,7 +23,7 @@ export const VerseOptions = () => {
     useVerseData();
 
   const setSurahNumber = useCallback(
-    (surahNumber: number, setAyahNumber?: boolean) => {
+    (surahNumber: number) => {
       const surahInfo = getSurahData(surahNumber);
       // If surah doesn't need bismillah added,
       const includesBismillah: number =
@@ -49,7 +49,7 @@ export const VerseOptions = () => {
   useEffect(() => {
     if (currentVerse) {
       setSurah(currentVerse.surahNumber);
-      setSurahNumber(currentVerse.surahNumber, false);
+      setSurahNumber(currentVerse.surahNumber);
       setAyah(currentVerse.verseNumber);
     }
   }, [currentVerse, setSurahNumber]);
@@ -85,7 +85,7 @@ export const VerseOptions = () => {
 
   const handleSurahChange = (surahNumber: number) => {
     setSurah(surahNumber);
-    setSurahNumber(surahNumber, true);
+    setSurahNumber(surahNumber);
     if (ayahRef.current) ayahRef.current.value = "";
     ayahRef.current?.focus();
   };
