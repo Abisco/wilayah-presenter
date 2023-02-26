@@ -74,12 +74,12 @@ export const Presentation = ({
               </h3>
             )}
           </div>
-          <div className="absolute bottom-2 left-2 text-white">
+          <p className="absolute bottom-4 left-5 text-lg text-white">
             {surahData?.surahNameArabic}
-          </div>
-          <div className="absolute bottom-2 right-2 text-white">
+          </p>
+          <p className="absolute bottom-4 right-5 text-lg text-white">
             {surahData?.surahNameEnglish}
-          </div>
+          </p>
         </>
       )}
     </div>

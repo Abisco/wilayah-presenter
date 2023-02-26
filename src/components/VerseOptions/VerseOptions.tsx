@@ -41,14 +41,6 @@ export const VerseOptions = () => {
           .map((_, i) => i - includesBismillah + 1);
 
         setCurrentAyahs(ayahs);
-
-        if (setAyahNumber) {
-          if (surahNumber !== 1 && surahNumber !== 9) {
-            setAyah(1);
-          } else {
-            setAyah(0);
-          }
-        }
       }
     },
     [getSurahData]
