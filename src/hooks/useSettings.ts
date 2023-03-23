@@ -1,5 +1,6 @@
 import { useCallback, useContext } from "react";
 import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
+import type { PresenterMode } from "./hooksProvider";
 import { HookContext } from "./hooksProvider";
 
 export type LayoutOptions = "Full" | "Third";
@@ -16,6 +17,7 @@ export interface SettingsType {
   translationFontColor: string;
   translationSource: string;
   layout: LayoutOptions;
+  mode: PresenterMode;
 }
 
 export const useSettings = () => {

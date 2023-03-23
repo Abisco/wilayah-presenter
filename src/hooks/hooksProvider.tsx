@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import type { SetStateAction } from "react";
 import { createContext, useState } from "react";
 import type { SettingsType } from "./useSettings";
-import { BroadcastChannel } from "broadcast-channel";
+
+export enum PresenterMode {
+  "Default" = "Default",
+  "Playlist" = "Playlist",
+}
 
 export const DefaultSettings: SettingsType = {
   backgroundColor: "black",
@@ -16,6 +19,7 @@ export const DefaultSettings: SettingsType = {
   translationFontSize: 22,
   translationFontColor: "white",
   layout: "Third",
+  mode: PresenterMode.Default,
 };
 
 export interface OrganizedVerseType {
@@ -34,6 +38,17 @@ interface CurrentVerseDataType {
   nextVerse: OrganizedVerseType | undefined;
 }
 
+export enum PlaylistItemType {
+  Verse = "verse",
+}
+
+export interface PlaylistVerseType {
+  type: PlaylistItemType.Verse;
+  overallVerseNumber: number;
+}
+
+export type PlaylistType = PlaylistVerseType[];
+
 export const HookContext = createContext<{
   settings: SettingsType;
   setSettings: (settings: SetStateAction<SettingsType>) => void;
@@ -43,19 +58,23 @@ export const HookContext = createContext<{
   setCurrentVerseData: (
     currentVerseData: SetStateAction<CurrentVerseDataType>
   ) => void;
+  playlist: PlaylistType;
+  setPlaylist: (playlist: SetStateAction<PlaylistType>) => void;
   broadcasterWindowId: string;
 }>({
   settings: DefaultSettings,
-  setSettings: () => {},
+  setSettings: () => void 0,
   currentVerseNumber: 1,
-  setCurrentVerseNumber: () => {},
+  setCurrentVerseNumber: () => void 0,
   currentVerseData: {
     previousVerse: undefined,
     currentVerse: undefined,
     nextVerse: undefined,
   },
-  setCurrentVerseData: () => {},
+  setCurrentVerseData: () => void 0,
   broadcasterWindowId: "",
+  playlist: [],
+  setPlaylist: () => void 0,
 });
 
 export const HookProvider = ({ children }: { children: React.ReactNode }) => {
@@ -69,6 +88,7 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
       currentVerse: undefined,
       nextVerse: undefined,
     });
+  const [playlist, setPlaylist] = useState<PlaylistType>([]);
 
   const [broadcasterWindowId] = useState<string>(
     "private-" + Math.random().toString()
@@ -83,6 +103,8 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
         setCurrentVerseNumber,
         currentVerseData,
         setCurrentVerseData,
+        playlist,
+        setPlaylist,
         broadcasterWindowId,
       }}
     >

@@ -1,99 +1,35 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import { HotkeysProvider, useHotkeys } from "react-hotkeys-hook";
-import { NextVersePreview } from "../components/NextVersePreview/NextVersePreview";
+import { HotkeysProvider } from "react-hotkeys-hook";
+import { NextDefaultVersePreview } from "../components/NextVersePreview/NextDefaultVersePreview";
+import { NextPlaylistVersePreview } from "../components/NextVersePreview/NextPlaylistVersePreview";
+import { PlaylistOptions } from "../components/PlaylistOptions/PlaylistOptions";
 import { Presentation } from "../components/Presentation/Presentation";
-import { PreviousVersePreview } from "../components/PreviousVersePreview/PreviousVersePreview";
+import { PreviousDefaultVersePreview } from "../components/PreviousVersePreview/PreviousDefaultVersePreview";
+import { PreviousPlaylistVersePreview } from "../components/PreviousVersePreview/PreviousPlaylistVersePreview";
 import { SettingsOptions } from "../components/SettingsOptions/SettingsOptions";
 import { ShortcutOptions } from "../components/ShortcutOptions/ShortcutOptions";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { VerseOptions } from "../components/VerseOptions/VerseOptions";
-import { useBroadcastHandlerHook } from "../hooks/broadcastHandlerHook";
+import { useInitBroadcasts } from "../hooks/broadcastHandlerHook";
+import { PresenterMode } from "../hooks/hooksProvider";
+import { useInitializeHotkeys } from "../hooks/useHotkeyHandler";
 import { useQuranIndex } from "../hooks/useQuranIndex";
-import type { SettingsType } from "../hooks/useSettings";
 import { useSettings } from "../hooks/useSettings";
 import { useVerseData } from "../hooks/useVerseData";
 
 const Presenter: NextPage = () => {
-  const {
-    currentVerse,
-    verseData,
-    changeVerseLocally,
-    setCurrentVerseNumber,
-    currentVerseNumber,
-  } = useVerseData();
+  const { currentVerse, verseData } = useVerseData();
   const { getSurahData } = useQuranIndex();
-  const { changeSize, updateSettings, settings } = useSettings();
-  const { instantiateBroadcastHandler, sendBroadcast } =
-    useBroadcastHandlerHook();
+  const { settings } = useSettings();
 
-  // Change font size hotkeys
-  useHotkeys("alt+q", () => changeSize("arabic", 2), { scopes: "general" }, [
-    changeSize,
-  ]);
-  useHotkeys("alt+w", () => changeSize("arabic", -2), { scopes: "general" }, [
-    changeSize,
-  ]);
-  useHotkeys(
-    "alt+e",
-    () => changeSize("translation", 2),
-    { scopes: "general" },
-    [changeSize]
-  );
-  useHotkeys(
-    "alt+r",
-    () => changeSize("translation", -2),
-    { scopes: "general" },
-    [changeSize]
-  );
-
-  // Verse navigation hotkeys
-  useHotkeys("right", () => changeVerseLocally(1), { scopes: "general" }, [
-    changeVerseLocally,
-  ]);
-  useHotkeys("left", () => changeVerseLocally(-1), { scopes: "general" }, [
-    changeVerseLocally,
-  ]);
-
-  // Toggle hotkeys
-  useHotkeys(
-    "shift+q",
-    () => updateSettings({ showArabic: !settings.showArabic }),
-    { scopes: "general" },
-    [settings.showArabic, updateSettings]
-  );
-  useHotkeys(
-    "shift+e",
-    () => updateSettings({ showTranslation: !settings.showTranslation }),
-    { scopes: "general" },
-    [settings.showTranslation, updateSettings]
-  );
+  useInitializeHotkeys();
+  const { initiateConnection, setupBroadcasts } = useInitBroadcasts();
 
   useEffect(() => {
-    instantiateBroadcastHandler((message, messageData) => {
-      switch (message) {
-        case "initiateConnectionResponse": {
-          updateSettings(messageData.settings as SettingsType, false);
-          setCurrentVerseNumber(
-            messageData.currentVerseNumber as number,
-            false
-          );
-        }
-      }
-    });
-  }, [
-    changeVerseLocally,
-    currentVerseNumber,
-    instantiateBroadcastHandler,
-    sendBroadcast,
-    setCurrentVerseNumber,
-    settings,
-    updateSettings,
-  ]);
-
-  useEffect(() => {
-    sendBroadcast("initiateConnection");
+    initiateConnection();
+    setupBroadcasts();
   }, []);
 
   return (
@@ -110,6 +46,7 @@ const Presenter: NextPage = () => {
           <div className="flex h-full max-h-full gap-10 px-4 py-2">
             <div className="flex h-full flex-col gap-3 overflow-y-auto">
               <VerseOptions />
+              <PlaylistOptions expandable />
               <SettingsOptions expandable />
               <ShortcutOptions expandable />
             </div>
@@ -122,8 +59,18 @@ const Presenter: NextPage = () => {
                 />
               </div>
               <div className="flex items-center justify-between">
-                <PreviousVersePreview />
-                <NextVersePreview />
+                {settings.mode === PresenterMode.Default && (
+                  <>
+                    <PreviousDefaultVersePreview />
+                    <NextDefaultVersePreview />
+                  </>
+                )}
+                {settings.mode === PresenterMode.Playlist && (
+                  <>
+                    <PreviousPlaylistVersePreview />
+                    <NextPlaylistVersePreview />
+                  </>
+                )}
               </div>
             </div>
           </div>

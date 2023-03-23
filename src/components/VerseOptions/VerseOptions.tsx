@@ -1,6 +1,10 @@
 import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect } from "react";
+import { PlaylistVerseType, PresenterMode } from "../../hooks/hooksProvider";
+import { PlaylistItemType } from "../../hooks/hooksProvider";
+import { usePlaylist } from "../../hooks/usePlaylist";
 import { useQuranIndex } from "../../hooks/useQuranIndex";
+import { useSettings } from "../../hooks/useSettings";
 import { useVerseData } from "../../hooks/useVerseData";
 import { Combobox } from "../Combobox/Combobox";
 import { OptionsBox } from "../OptionsBox/OptionsBox";
@@ -8,6 +12,7 @@ import { OptionsBox } from "../OptionsBox/OptionsBox";
 export const VerseOptions = () => {
   const [surah, setSurah] = React.useState(1);
   const [ayah, setAyah] = React.useState(1);
+  const { playlist, addToPlaylist } = usePlaylist();
   const [currentAyahs, setCurrentAyahs] = React.useState(
     Array(7)
       .fill(0)
@@ -19,6 +24,7 @@ export const VerseOptions = () => {
   const presentRef = React.useRef<HTMLButtonElement>(null);
 
   const { quranIndex, getSurahData } = useQuranIndex();
+  const { updateSettings } = useSettings();
   const { currentVerse, calculateOverallVerseNumber, setCurrentVerseNumber } =
     useVerseData();
 
@@ -58,6 +64,7 @@ export const VerseOptions = () => {
     const overallVerseNumber = calculateOverallVerseNumber(surah, ayah);
 
     setCurrentVerseNumber(overallVerseNumber);
+    updateSettings({ mode: PresenterMode.Default });
   };
 
   const handleUserTyping = useCallback((e: KeyboardEvent) => {
@@ -143,7 +150,17 @@ export const VerseOptions = () => {
         </div>
         <div className="flex flex-col items-center justify-center gap-1">
           <button
-            disabled
+            disabled={playlist.some(
+              (verse) =>
+                verse.overallVerseNumber ===
+                calculateOverallVerseNumber(surah, ayah)
+            )}
+            onClick={() => {
+              addToPlaylist({
+                overallVerseNumber: calculateOverallVerseNumber(surah, ayah),
+                type: PlaylistItemType.Verse,
+              } as PlaylistVerseType);
+            }}
             className="w-[124px] items-center justify-center rounded-md bg-[#1E277C] py-1 px-2 font-bold text-white disabled:text-gray-400"
           >
             <span className="text-sm text-inherit">Add to Playlist</span>

@@ -28,7 +28,7 @@ export const OptionsBox = ({
   return (
     <div
       className={twMerge(
-        "flex w-full flex-col gap-2 overflow-y-auto rounded bg-[#EBE8E86E]/40 p-6",
+        "flex w-full flex-col gap-2 overflow-y-hidden rounded bg-[#EBE8E86E]/40 p-6",
         className
       )}
     >
@@ -49,7 +49,9 @@ export const OptionsBox = ({
           </button>
         )}
       </div>
-      {(expanded || !expandable) && <div className="w-full">{children}</div>}
+      {(expanded || !expandable) && (
+        <div className="w-full overflow-y-auto">{children}</div>
+      )}
     </div>
   );
 };
