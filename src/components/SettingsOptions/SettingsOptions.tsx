@@ -1,6 +1,7 @@
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import { useQuranIndex } from "../../hooks/useQuranIndex";
 import { useSettings } from "../../hooks/useSettings";
 import { Combobox } from "../Combobox/Combobox";
 import { OptionsBox } from "../OptionsBox/OptionsBox";
@@ -13,12 +14,17 @@ export const SettingsOptions = ({
   expandable = false,
 }: SettingsOptionsProps) => {
   const { settings, updateSettings } = useSettings();
+  const { sources } = useQuranIndex();
+
   const {
     showArabic,
     showTranslation,
     translationFontColor,
     translationFontSize,
     arabicFontSize,
+    arabicSource,
+    translationLanguage,
+    translationSource,
     layout,
     backgroundColor,
   } = settings;
@@ -55,6 +61,24 @@ export const SettingsOptions = ({
               }
             />
           </div>
+          <div className="flex items-center justify-between gap-6">
+            <p className="text-sm">Font Style</p>
+            <Combobox
+              isLoading={sources.isLoading}
+              items={
+                sources.data?.ARABIC
+                  ? sources.data?.ARABIC?.map((source) => ({
+                      label: source,
+                      value: source,
+                    }))
+                  : []
+              }
+              selected={arabicSource}
+              onSelect={(newSource) =>
+                updateSettings({ arabicSource: newSource.value })
+              }
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between border-b border-[#BFBFBF]">
@@ -79,6 +103,24 @@ export const SettingsOptions = ({
                 updateSettings({
                   translationFontSize: parseInt(selectedFont.value),
                 })
+              }
+            />
+          </div>
+          <div className="flex items-center justify-between gap-6">
+            <p className="text-sm">Source</p>
+            <Combobox
+              isLoading={sources.isLoading}
+              items={
+                sources.data?.ENGLISH
+                  ? sources.data?.ENGLISH?.map((source) => ({
+                      label: source,
+                      value: source,
+                    }))
+                  : []
+              }
+              selected={translationSource}
+              onSelect={(newSource) =>
+                updateSettings({ translationSource: newSource.value })
               }
             />
           </div>
