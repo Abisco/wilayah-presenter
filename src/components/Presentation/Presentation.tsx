@@ -32,7 +32,7 @@ export const Presentation = ({
       className={twMerge(
         "relative flex h-full w-full flex-col",
         settings.layout === "Third"
-          ? "h-[33%] min-h-[33%]"
+          ? "h-[33%] min-h-[33%] overflow-y-auto overflow-x-hidden"
           : "absolute top-0 h-full"
       )}
       style={{ backgroundColor }}
