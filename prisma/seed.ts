@@ -37,30 +37,6 @@ const rawQuranList = fs.readFileSync(
 );
 const quranList = JSON.parse(rawQuranList) as QuranListEntry[];
 
-const rawUthmaniQuran = fs.readFileSync(
-  "./prisma/quranFiles/quran-uthmani.json",
-  "utf8"
-);
-const uthmaniQuran = JSON.parse(rawUthmaniQuran) as QuranVersesObject;
-
-const rawShakirQuran = fs.readFileSync(
-  "./prisma/quranFiles/en-shakir.json",
-  "utf8"
-);
-const shakirQuran = JSON.parse(rawShakirQuran) as QuranVersesObject;
-
-const rawYusufAliQuran = fs.readFileSync(
-  "./prisma/quranFiles/en-yusufali.json",
-  "utf8"
-);
-const yusufaliQuran = JSON.parse(rawYusufAliQuran) as QuranVersesObject;
-
-const rawSahihQuran = fs.readFileSync(
-  "./prisma/quranFiles/en-sahih.json",
-  "utf8"
-);
-const sahihQuran = JSON.parse(rawSahihQuran) as QuranVersesObject;
-
 const languageBismillah: {
   [key in Language]: string;
 } = {
@@ -71,12 +47,14 @@ const languageBismillah: {
 };
 
 const createSource = async (
-  sourceObject: QuranVersesObject,
+  sourcePath: string,
   language: Language,
-  source: string,
+  sourceKey: string,
   sourceName: string
 ) => {
   console.log("Creating source: ", sourceName);
+  const rawFile = fs.readFileSync(sourcePath, "utf8");
+  const sourceObject = JSON.parse(rawFile) as QuranVersesObject;
   const versesData: PrismaClient.Prisma.Enumerable<PrismaClient.Prisma.VerseCreateManyInput> =
     [];
   let bismillahsAdded = 0;
@@ -90,8 +68,8 @@ const createSource = async (
   });
 
   if (!sourceExists) {
-    for (const verseNum in sourceObject?.quran?.[source] ?? {}) {
-      const verse = sourceObject?.quran?.[source]?.[verseNum];
+    for (const verseNum in sourceObject?.quran?.[sourceKey] ?? {}) {
+      const verse = sourceObject?.quran?.[sourceKey]?.[verseNum];
 
       if (verse) {
         const {
@@ -172,10 +150,54 @@ async function main() {
     }
   });
 
-  await createSource(uthmaniQuran, "ARABIC", "quran-uthmani", "Uthmani");
-  await createSource(shakirQuran, "ENGLISH", "en.shakir", "Shakir");
-  await createSource(yusufaliQuran, "ENGLISH", "en.yusufali", "Yusuf Ali");
-  await createSource(sahihQuran, "ENGLISH", "en.sahih", "Sahih International");
+  // Arabic sources
+  await createSource(
+    "./prisma/quranFiles/quran-uthmani.json",
+    "ARABIC",
+    "quran-uthmani",
+    "Uthmani"
+  );
+  await createSource(
+    "./prisma/quranFiles/quran-simple-enhanced.json",
+    "ARABIC",
+    "quran-simple-enhanced",
+    "Simple Enhanced"
+  );
+
+  /*
+  await createSource(
+    "./prisma/quranFiles/quran-tajweed.json",
+    "ARABIC",
+    "quran-tajweed",
+    "Tajweed"
+  );
+  await createSource(
+    "./prisma/quranFiles/quran-wordbyword.json",
+    "ARABIC",
+    "quran-wordbyword",
+    "Word by Word"
+  );
+  */
+
+  // English sources
+  await createSource(
+    "./prisma/quranFiles/en-shakir.json",
+    "ENGLISH",
+    "en.shakir",
+    "Shakir"
+  );
+  await createSource(
+    "./prisma/quranFiles/en-yusufali.json",
+    "ENGLISH",
+    "en.yusufali",
+    "Yusuf Ali"
+  );
+  await createSource(
+    "./prisma/quranFiles/en-sahih.json",
+    "ENGLISH",
+    "en.sahih",
+    "Sahih International"
+  );
 
   return "Success!";
 }

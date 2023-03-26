@@ -8,7 +8,7 @@ export const versesRouter = createTRPCRouter({
     .input(
       z.object({
         overallVerseNumber: z.number(),
-        sources: z.array(z.string()).default(["Uthmani", "Shakir"]),
+        sources: z.array(z.string()).default(["Simple Enhanced", "Shakir"]),
         numVersesBefore: z.number().default(2),
         numVersesAfter: z.number().default(2),
       })

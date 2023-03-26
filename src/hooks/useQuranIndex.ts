@@ -1,4 +1,4 @@
-import type { QuranIndex } from "@prisma/client";
+import type { Language, QuranIndex } from "@prisma/client";
 import { useCallback } from "react";
 import { api } from "../utils/api";
 
@@ -10,6 +10,7 @@ export type SurahDataType =
 
 export const useQuranIndex = () => {
   const quranIndex = api.quranIndex.getQuranIndex.useQuery();
+  const sources = api.quranIndex.getSources.useQuery();
 
   const getSurahData = useCallback(
     (surahNumber = 1) => {
@@ -28,5 +29,6 @@ export const useQuranIndex = () => {
   return {
     quranIndex,
     getSurahData,
+    sources,
   };
 };
