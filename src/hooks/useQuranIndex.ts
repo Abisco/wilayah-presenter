@@ -10,6 +10,7 @@ export type SurahDataType =
 
 export const useQuranIndex = () => {
   const quranIndex = api.quranIndex.getQuranIndex.useQuery();
+  const sources = api.quranIndex.getSources.useQuery();
 
   const getSurahData = useCallback(
     (surahNumber = 1) => {
@@ -25,15 +26,9 @@ export const useQuranIndex = () => {
     [quranIndex?.data?.quranIndex]
   );
 
-  const getSources = useCallback(() => {
-    // Categorize the list of sources for each language
-    const sources: {
-      [key?: Language]: string[];
-    } = {};
-  }, [quranIndex?.data?.quranIndex]);
-
   return {
     quranIndex,
     getSurahData,
+    sources,
   };
 };

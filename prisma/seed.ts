@@ -163,6 +163,8 @@ async function main() {
     "quran-simple-enhanced",
     "Simple Enhanced"
   );
+
+  /*
   await createSource(
     "./prisma/quranFiles/quran-tajweed.json",
     "ARABIC",
@@ -175,6 +177,7 @@ async function main() {
     "quran-wordbyword",
     "Word by Word"
   );
+  */
 
   // English sources
   await createSource(

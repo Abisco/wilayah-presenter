@@ -7,7 +7,7 @@ import { BroadcastChannel } from "broadcast-channel";
 export const DefaultSettings: SettingsType = {
   backgroundColor: "black",
   showArabic: true,
-  arabicSource: "Uthmani",
+  arabicSource: "Simple Enhanced",
   arabicFontSize: 32,
   arabicFontColor: "white",
   showTranslation: true,
