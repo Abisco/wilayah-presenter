@@ -110,6 +110,7 @@ export const VerseOptions = () => {
       icon={<DocumentPlusIcon />}
       name="Select Verse"
       expandable={false}
+      className="overflow-y-visible"
     >
       <form
         className="flex gap-1"
