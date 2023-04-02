@@ -19,20 +19,16 @@ import { usePlaylist } from "../hooks/usePlaylist";
 import { useQuranIndex } from "../hooks/useQuranIndex";
 import { useSettings } from "../hooks/useSettings";
 import { useVerseData } from "../hooks/useVerseData";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const { currentVerse, verseData } = useVerseData();
   const { getSurahData } = useQuranIndex();
-  const {
-    previousVerseInPlaylist,
-    nextVerseInPlaylist,
-    updatePlaylist,
-    playlist,
-  } = usePlaylist();
   const { settings } = useSettings();
 
   useInitializeHotkeys();
   const { initiateConnection, setupBroadcasts } = useInitBroadcasts();
+  const router = useRouter();
 
   useEffect(() => {
     initiateConnection();

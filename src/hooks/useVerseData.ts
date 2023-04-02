@@ -1,4 +1,5 @@
-import { useCallback, useContext } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useContext, useEffect } from "react";
 import { api } from "../utils/api";
 import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
 import { HookContext } from "./hooksProvider";
@@ -12,6 +13,7 @@ export const useVerseData = () => {
   const { getSources } = useSettings();
   const { quranIndex } = useQuranIndex();
   const { sendBroadcast } = useBroadcastHandlerHook();
+  const router = useRouter();
 
   const {
     currentVerseNumber,
@@ -43,6 +45,14 @@ export const useVerseData = () => {
       },
     }
   );
+
+  useEffect(() => {
+    // Calculate surah and verse number from overall verse number
+
+    void router.push({
+      pathname: "?type=verse&surahNumber=1&verseNumber=1",
+    });
+  }, [currentVerseNumber, router]);
 
   /*
     Given a number of how much to change the verse by, this function will update the current verse number
@@ -112,6 +122,12 @@ export const useVerseData = () => {
       return versesBefore + verseNumber;
     },
     [quranIndex?.data?.quranIndex]
+  );
+
+  // Given an overall verse number, this function will calculate the surah and verse number
+  const calculateSurahAndVerseNumber = useCallback(
+    (overallVerseNumber: number) => {},
+    []
   );
 
   const updateCurrentVerseNumber = useCallback(
