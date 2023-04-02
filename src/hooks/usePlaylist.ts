@@ -38,18 +38,15 @@ export const usePlaylist = () => {
   );
 
   // Given an index of a verse in the playlist, remove it from the playlist
-  const removeFromPlaylist = useCallback(
-    (playlistIndex: number) => {
-      setPlaylist((prev) => {
-        prev.splice(playlistIndex, 1);
+  const removeFromPlaylist = (playlistIndex: number) => {
+    setPlaylist((prev) => {
+      prev.splice(playlistIndex, 1);
 
-        sendBroadcast("updatePlaylist", { playlist: [...prev] });
+      sendBroadcast("updatePlaylist", { playlist: [...prev] });
 
-        return prev;
-      });
-    },
-    [sendBroadcast, setPlaylist]
-  );
+      return [...prev];
+    });
+  };
 
   const clearPlaylist = useCallback(() => {
     setPlaylist(() => {

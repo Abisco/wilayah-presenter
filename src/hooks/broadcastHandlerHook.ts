@@ -9,7 +9,6 @@ import { useSettings } from "./useSettings";
 
 type AcceptableBroadcastData =
   | "verseNumberChange"
-  | "changeVerseLocally"
   | "updatePlaylist"
   | "updateSettings"
   | "initiateConnection"
@@ -84,11 +83,6 @@ export const useInitBroadcasts = () => {
   const setupBroadcasts = useCallback(() => {
     instantiateBroadcastHandler((message, messageData) => {
       switch (message) {
-        case "changeVerseLocally": {
-          changeVerseLocally(messageData.verseNumberChange as 1 | -1, false);
-          break;
-        }
-
         case "verseNumberChange": {
           setCurrentVerseNumber(
             messageData.currentVerseNumber as number,

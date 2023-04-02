@@ -10,12 +10,14 @@ interface PresentationProps {
   isLoading?: boolean;
   currentVerse?: OrganizedVerseType;
   surahData: SurahDataType;
+  textScale?: number;
 }
 
 export const Presentation = ({
   isLoading = false,
   currentVerse,
   surahData,
+  textScale = 1.0,
 }: PresentationProps) => {
   const { settings, updateSettings } = useSettings();
   const {
@@ -57,9 +59,12 @@ export const Presentation = ({
         </div>
       ) : (
         <>
-          <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 text-white">
+          <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 px-8 text-white">
             {showArabic && (
-              <h3 className="text-center" style={{ fontSize: arabicFontSize }}>
+              <h3
+                className="text-center font-serif"
+                style={{ fontSize: arabicFontSize * textScale }}
+              >
                 <span>{currentVerse?.ARABIC} </span>
                 <span>
                   ({currentVerse?.verseNumber.toLocaleString("ar-EG")})
@@ -69,17 +74,23 @@ export const Presentation = ({
             {showTranslation && (
               <h3
                 className="flex text-center"
-                style={{ fontSize: translationFontSize }}
+                style={{ fontSize: translationFontSize * textScale }}
               >
                 {currentVerse?.[translationLanguage]} (
                 {currentVerse?.surahNumber}:{currentVerse?.verseNumber})
               </h3>
             )}
           </div>
-          <p className="absolute bottom-4 left-5 text-lg text-white">
+          <p
+            className="absolute bottom-4 left-5 text-white"
+            style={{ fontSize: 18 * textScale }}
+          >
             {surahData?.surahNameArabic}
           </p>
-          <p className="absolute bottom-4 right-5 text-lg text-white">
+          <p
+            className="absolute bottom-4 right-5 text-white"
+            style={{ fontSize: 18 * textScale }}
+          >
             {surahData?.surahNameEnglish}
           </p>
         </>

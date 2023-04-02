@@ -52,17 +52,17 @@ export const useVerseData = () => {
     (verseNumberChange: 1 | -1, updateChannels = true) => {
       const newVerseNumber = currentVerseNumber + verseNumberChange;
 
-      if (verseNumberChange === 1 && currentVerseData.nextVerse === undefined) {
+      if (verseNumberChange === 1 && !currentVerseData.nextVerse) {
         return;
-      } else if (
-        verseNumberChange === -1 &&
-        currentVerseData.previousVerse === undefined
-      ) {
+      } else if (verseNumberChange === -1 && !currentVerseData.previousVerse) {
         return;
       }
 
-      if (updateChannels)
-        sendBroadcast("changeVerseLocally", { verseNumberChange });
+      if (updateChannels) {
+        sendBroadcast("verseNumberChange", {
+          currentVerseNumber: newVerseNumber,
+        });
+      }
 
       setCurrentVerseData({
         currentVerse: verse.data?.verse?.find(
@@ -76,7 +76,7 @@ export const useVerseData = () => {
         ),
       });
 
-      setCurrentVerseNumber(currentVerseNumber + verseNumberChange);
+      setCurrentVerseNumber(newVerseNumber);
     },
     [
       currentVerseData.nextVerse,

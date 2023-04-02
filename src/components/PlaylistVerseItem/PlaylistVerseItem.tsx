@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 import { usePlaylist } from "../../hooks/usePlaylist";
 import { useSettings } from "../../hooks/useSettings";
@@ -28,6 +28,13 @@ export const PlaylistVerseItem = ({ index, verse }: PlaylistVerseItemProps) => {
     numVersesAfter: 0,
   });
 
+  const removeVerse = useCallback(
+    (idx: number) => {
+      removeFromPlaylist(idx);
+    },
+    [removeFromPlaylist]
+  );
+
   return (
     <button
       className={twMerge(
@@ -46,7 +53,7 @@ export const PlaylistVerseItem = ({ index, verse }: PlaylistVerseItemProps) => {
       ) : (
         <div className={twMerge("flex w-full justify-between")}>
           <div className="flex w-4/5 flex-col p-1">
-            <p className="truncate text-sm">
+            <p className="truncate text-sm" dir="rtl">
               {verseData.data?.verse[0]?.ARABIC}
             </p>
             <p className="truncate text-sm">
@@ -61,19 +68,21 @@ export const PlaylistVerseItem = ({ index, verse }: PlaylistVerseItemProps) => {
             <p className="truncate text-xs">
               {
                 getSurahData(verseData.data?.verse[0]?.surahNumber)
-                  ?.surahNameEnglish
+                  ?.surahNameArabic
               }
             </p>
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
+
+                removeVerse(index);
                 // If the verse is currently showing, move to the next one
                 if (currentVerseNumber === verse.overallVerseNumber) {
                   setCurrentVerseNumber(
                     playlist[index + 1]?.overallVerseNumber || 1
                   );
                 }
-                removeFromPlaylist(index);
               }}
             >
               <XCircleIcon className="h-4 w-4 text-red-500" />
