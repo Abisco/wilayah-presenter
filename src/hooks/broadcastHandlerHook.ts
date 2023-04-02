@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext } from "react";
 import type { PlaylistType } from "./hooksProvider";
 import { HookContext } from "./hooksProvider";
 import { BroadcastChannel } from "broadcast-channel";
