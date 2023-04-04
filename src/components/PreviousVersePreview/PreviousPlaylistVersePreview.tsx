@@ -1,16 +1,32 @@
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { usePlaylist } from "../../hooks/usePlaylist";
+import { useSettings } from "../../hooks/useSettings";
 import { useVerseData } from "../../hooks/useVerseData";
+import { api } from "../../utils/api";
 import { VersePreviewBox } from "../VersePreviewBox/VersePreviewBox";
 
-export const PreviousVersePreview = () => {
-  const { previousVerse, changeVerseLocally } = useVerseData();
+export const PreviousPlaylistVersePreview = () => {
+  const { previousVerseInPlaylist } = usePlaylist();
+  const { setCurrentVerseNumber } = useVerseData();
+  const { getSources } = useSettings();
+
+  const verseData = api.verses.getVerseByOverallVerseNumber.useQuery({
+    overallVerseNumber: previousVerseInPlaylist() || 0,
+    sources: getSources(),
+    numVersesBefore: 0,
+    numVersesAfter: 0,
+  });
+
+  const previousVerse = verseData.data?.verse[0];
 
   return (
     <div className="flex w-[28vw] max-w-[28vw] items-center gap-8">
       {previousVerse && (
         <>
           <button
-            onClick={() => changeVerseLocally(-1)}
+            onClick={() =>
+              setCurrentVerseNumber(previousVerse?.overallVerseNumber)
+            }
             className="flex flex-col items-center gap-1.5"
           >
             <div className="flex flex-col items-center">

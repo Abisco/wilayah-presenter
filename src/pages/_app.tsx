@@ -7,10 +7,9 @@ import { HookProvider } from "../hooks/hooksProvider";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-
     <HookProvider>
-    <Component {...pageProps} />
-  </HookProvider>
+      <Component {...pageProps} />
+    </HookProvider>
   );
 };
 
