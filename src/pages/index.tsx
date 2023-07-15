@@ -50,7 +50,7 @@ const Home: NextPage = () => {
       <HotkeysProvider initiallyActiveScopes={["general"]}>
         <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-hidden bg-white">
           <Toolbar />
-          <div className='h-[calc(100vh-80px)] flex flex-col'>
+          <div className='h-[calc(100vh-80px)] flex flex-col justify-between'>
             <div className="flex max-h-[60%] flex-grow items-center justify-between gap-3 px-4 py-1">
               <div className="flex h-full max-w-[30%] flex-col items-center justify-between py-2">
                 <SettingsOptions expandable={false} />
