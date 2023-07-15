@@ -50,36 +50,39 @@ const Home: NextPage = () => {
       <HotkeysProvider initiallyActiveScopes={["general"]}>
         <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-hidden bg-white">
           <Toolbar />
-          <div className="flex max-h-[60%] flex-grow items-center justify-between gap-3 px-4 py-1">
-            <div className="flex h-full max-w-[30%] flex-col items-center justify-between py-2">
-              <SettingsOptions expandable={false} />
-              {settings.mode === PresenterMode.Default && (
-                <PreviousDefaultVersePreview />
-              )}
-              {settings.mode === PresenterMode.Playlist && (
-                <PreviousPlaylistVersePreview />
-              )}
+          <div className='h-[calc(100vh-80px)] flex flex-col'>
+            <div className="flex max-h-[60%] flex-grow items-center justify-between gap-3 px-4 py-1">
+              <div className="flex h-full max-w-[30%] flex-col items-center justify-between py-2">
+                <SettingsOptions expandable={false} />
+                {settings.mode === PresenterMode.Default && (
+                  <PreviousDefaultVersePreview />
+                )}
+                {settings.mode === PresenterMode.Playlist && (
+                  <PreviousPlaylistVersePreview />
+                )}
+              </div>
+              <div className="flex max-h-full max-w-[30%] flex-col items-center justify-around gap-1">
+                <VerseOptions />
+                <PlaylistOptions />
+              </div>
+              <div className="flex h-full max-w-[30%] flex-col items-center justify-between py-2">
+                <ShortcutOptions expandable={false} />
+                {settings.mode === PresenterMode.Default && (
+                  <NextDefaultVersePreview />
+                )}
+                {settings.mode === PresenterMode.Playlist && (
+                  <NextPlaylistVersePreview />
+                )}
+              </div>
             </div>
-            <div className="flex max-h-full max-w-[30%] flex-col items-center justify-around gap-1">
-              <VerseOptions />
-              <PlaylistOptions />
-            </div>
-            <div className="flex h-full max-w-[30%] flex-col items-center justify-between py-2">
-              <ShortcutOptions expandable={false} />
-              {settings.mode === PresenterMode.Default && (
-                <NextDefaultVersePreview />
-              )}
-              {settings.mode === PresenterMode.Playlist && (
-                <NextPlaylistVersePreview />
-              )}
-            </div>
+
+            <Presentation
+              isLoading={verseData.isLoading}
+              currentVerse={currentVerse}
+              surahData={getSurahData(currentVerse?.surahNumber)}
+            />
           </div>
 
-          <Presentation
-            isLoading={verseData.isLoading}
-            currentVerse={currentVerse}
-            surahData={getSurahData(currentVerse?.surahNumber)}
-          />
         </main>
       </HotkeysProvider>
     </>
