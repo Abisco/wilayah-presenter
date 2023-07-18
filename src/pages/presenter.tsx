@@ -44,13 +44,13 @@ const Presenter: NextPage = () => {
         <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-white">
           <Toolbar />
           <div className="flex h-[calc(100vh-80px)] gap-10 px-4 py-2">
-            <div className="flex h-full flex-col gap-3 overflow-y-auto">
+            <div className="flex h-full w-4/12 max-w-[33.333%] flex-col gap-3 overflow-y-auto">
               <VerseOptions />
               <PlaylistOptions expandable />
               <SettingsOptions expandable />
               <ShortcutOptions expandable />
             </div>
-            <div className="flex h-full max-h-full w-8/12 flex-col items-center justify-between">
+            <div className="flex h-full max-h-full w-8/12 min-w-[66.666%] flex-col items-center justify-between">
               <div className="relative flex h-[60vh] w-full items-end border border-gray-300">
                 <Presentation
                   isLoading={verseData.isLoading}
