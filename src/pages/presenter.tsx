@@ -43,7 +43,7 @@ const Presenter: NextPage = () => {
       <HotkeysProvider initiallyActiveScopes={["general"]}>
         <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-white">
           <Toolbar />
-          <div className="flex h-full max-h-full gap-10 px-4 py-2">
+          <div className="flex h-[calc(100vh-80px)] gap-10 px-4 py-2">
             <div className="flex h-full flex-col gap-3 overflow-y-auto">
               <VerseOptions />
               <PlaylistOptions expandable />
