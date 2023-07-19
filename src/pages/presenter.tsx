@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import { HotkeysProvider } from "react-hotkeys-hook";
 import { NextDefaultVersePreview } from "../components/NextVersePreview/NextDefaultVersePreview";
 import { NextPlaylistVersePreview } from "../components/NextVersePreview/NextPlaylistVersePreview";
 import { PlaylistOptions } from "../components/PlaylistOptions/PlaylistOptions";
@@ -25,10 +24,9 @@ const Presenter: NextPage = () => {
   const { settings } = useSettings();
 
   useInitializeHotkeys();
-  const { initiateConnection, setupBroadcasts } = useInitBroadcasts();
+  const { setupBroadcasts } = useInitBroadcasts();
 
   useEffect(() => {
-    initiateConnection();
     setupBroadcasts();
   }, []);
 
@@ -40,43 +38,41 @@ const Presenter: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HotkeysProvider initiallyActiveScopes={["general"]}>
-        <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-white">
-          <Toolbar />
-          <div className="flex h-[calc(100vh-80px)] gap-10 px-4 py-2">
-            <div className="flex h-full w-4/12 max-w-[33.333%] flex-col gap-3 overflow-y-auto">
-              <VerseOptions />
-              <PlaylistOptions expandable />
-              <SettingsOptions expandable />
-              <ShortcutOptions expandable />
+      <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-white">
+        <Toolbar />
+        <div className="flex h-[calc(100vh-80px)] gap-10 px-4 py-2">
+          <div className="flex h-full w-4/12 max-w-[33.333%] flex-col gap-3 overflow-y-auto">
+            <VerseOptions />
+            <PlaylistOptions expandable />
+            <SettingsOptions expandable />
+            <ShortcutOptions expandable />
+          </div>
+          <div className="flex h-full max-h-full w-8/12 min-w-[66.666%] flex-col items-center justify-between">
+            <div className="relative flex h-full max-h-full w-full items-end border border-gray-300">
+              <Presentation
+                isLoading={verseData.isLoading}
+                currentVerse={currentVerse}
+                surahData={getSurahData(currentVerse?.surahNumber)}
+                textScale={0.6}
+              />
             </div>
-            <div className="flex h-full max-h-full w-8/12 min-w-[66.666%] flex-col items-center justify-between">
-              <div className="relative flex h-full max-h-full w-full items-end border border-gray-300">
-                <Presentation
-                  isLoading={verseData.isLoading}
-                  currentVerse={currentVerse}
-                  surahData={getSurahData(currentVerse?.surahNumber)}
-                  textScale={0.6}
-                />
-              </div>
-              <div className="flex min-h-[10vh] items-center justify-between">
-                {settings.mode === PresenterMode.Default && (
-                  <>
-                    <PreviousDefaultVersePreview />
-                    <NextDefaultVersePreview />
-                  </>
-                )}
-                {settings.mode === PresenterMode.Playlist && (
-                  <>
-                    <PreviousPlaylistVersePreview />
-                    <NextPlaylistVersePreview />
-                  </>
-                )}
-              </div>
+            <div className="flex min-h-[10vh] items-center justify-between">
+              {settings.mode === PresenterMode.Default && (
+                <>
+                  <PreviousDefaultVersePreview />
+                  <NextDefaultVersePreview />
+                </>
+              )}
+              {settings.mode === PresenterMode.Playlist && (
+                <>
+                  <PreviousPlaylistVersePreview />
+                  <NextPlaylistVersePreview />
+                </>
+              )}
             </div>
           </div>
-        </main>
-      </HotkeysProvider>
+        </div>
+      </main>
     </>
   );
 };

@@ -4,11 +4,14 @@ import { api } from "../utils/api";
 
 import "../styles/globals.css";
 import { HookProvider } from "../hooks/hooksProvider";
+import { HotkeysProvider } from "react-hotkeys-hook";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <HookProvider>
-      <Component {...pageProps} />
+      <HotkeysProvider initiallyActiveScopes={["general"]}>
+        <Component {...pageProps} />
+      </HotkeysProvider>
     </HookProvider>
   );
 };

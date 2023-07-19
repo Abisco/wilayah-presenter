@@ -4,15 +4,12 @@ import { HookContext } from "./hooksProvider";
 import { BroadcastChannel } from "broadcast-channel";
 import { useVerseData } from "./useVerseData";
 import { usePlaylist } from "./usePlaylist";
-import type { SettingsType } from "./useSettings";
 import { useSettings } from "./useSettings";
 
 type AcceptableBroadcastData =
   | "verseNumberChange"
   | "updatePlaylist"
-  | "updateSettings"
-  | "initiateConnection"
-  | "initiateConnectionResponse";
+  | "updateSettings";
 
 interface WilayahBroadcastMessage {
   message: AcceptableBroadcastData;
@@ -73,11 +70,9 @@ export const useBroadcastHandlerHook = () => {
 };
 
 export const useInitBroadcasts = () => {
-  const { instantiateBroadcastHandler, sendBroadcast } =
-    useBroadcastHandlerHook();
-  const { changeVerseLocally, setCurrentVerseNumber, currentVerseNumber } =
-    useVerseData();
-  const { playlist, updatePlaylist } = usePlaylist();
+  const { instantiateBroadcastHandler } = useBroadcastHandlerHook();
+  const { setCurrentVerseNumber } = useVerseData();
+  const { updatePlaylist } = usePlaylist();
   const { updateSettings, settings } = useSettings();
 
   const setupBroadcasts = useCallback(() => {
@@ -100,45 +95,16 @@ export const useInitBroadcasts = () => {
           updatePlaylist(messageData?.playlist as PlaylistType, false);
           break;
         }
-
-        case "initiateConnectionResponse": {
-          updateSettings(messageData.settings as SettingsType, false);
-          updatePlaylist(messageData.playlist as PlaylistType, false);
-          setCurrentVerseNumber(
-            messageData.currentVerseNumber as number,
-            false
-          );
-          break;
-        }
-
-        case "initiateConnection": {
-          sendBroadcast("initiateConnectionResponse", {
-            settings,
-            currentVerseNumber,
-            playlist,
-          });
-          break;
-        }
       }
     });
   }, [
-    changeVerseLocally,
-    currentVerseNumber,
     instantiateBroadcastHandler,
-    playlist,
-    sendBroadcast,
     setCurrentVerseNumber,
-    settings,
     updatePlaylist,
     updateSettings,
   ]);
 
-  const initiateConnection = useCallback(() => {
-    sendBroadcast("initiateConnection");
-  }, [sendBroadcast]);
-
   return {
     setupBroadcasts,
-    initiateConnection,
   };
 };

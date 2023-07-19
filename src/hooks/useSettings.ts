@@ -1,3 +1,4 @@
+import { devLogger } from "./../utils/devUtils";
 import { useCallback, useContext } from "react";
 import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
 import type { PresenterMode } from "./hooksProvider";
@@ -31,8 +32,14 @@ export const useSettings = () => {
           return newSettings as SettingsType;
         }
 
-        if (updateChannels)
+        if (updateChannels) {
           sendBroadcast("updateSettings", { ...prev, ...newSettings });
+          devLogger("Local Storage: Set", { ...prev, ...newSettings });
+          localStorage.setItem(
+            "settings",
+            JSON.stringify({ ...prev, ...newSettings })
+          );
+        }
 
         return {
           ...prev,
