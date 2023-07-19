@@ -51,7 +51,7 @@ const Presenter: NextPage = () => {
               <ShortcutOptions expandable />
             </div>
             <div className="flex h-full max-h-full w-8/12 min-w-[66.666%] flex-col items-center justify-between">
-              <div className="relative flex h-[60vh] w-full items-end border border-gray-300">
+              <div className="relative flex h-full max-h-full w-full items-end border border-gray-300">
                 <Presentation
                   isLoading={verseData.isLoading}
                   currentVerse={currentVerse}
@@ -59,7 +59,7 @@ const Presenter: NextPage = () => {
                   textScale={0.6}
                 />
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex min-h-[10vh] items-center justify-between">
                 {settings.mode === PresenterMode.Default && (
                   <>
                     <PreviousDefaultVersePreview />
