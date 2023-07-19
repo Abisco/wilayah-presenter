@@ -5,6 +5,7 @@ import { PresenterMode } from "./hooksProvider";
 import { HookContext } from "./hooksProvider";
 import { useSettings } from "./useSettings";
 import { useVerseData } from "./useVerseData";
+import { devLogger } from "../utils/devUtils";
 
 export type LayoutOptions = "Full" | "Third";
 
@@ -17,19 +18,28 @@ export const usePlaylist = () => {
   const updatePlaylist = useCallback(
     (newPlaylist: PlaylistType, updateChannels = true) => {
       setPlaylist(() => {
-        if (updateChannels)
+        if (updateChannels) {
           sendBroadcast("updatePlaylist", { playlist: newPlaylist });
+        }
 
         return [...newPlaylist];
       });
     },
-    [sendBroadcast, setPlaylist]
+    [playlist, sendBroadcast, setPlaylist]
   );
 
   const addToPlaylist = useCallback(
     (newVerse: PlaylistVerseType) => {
       setPlaylist((prev) => {
         sendBroadcast("updatePlaylist", { playlist: [...prev, newVerse] });
+
+        devLogger("Local Storage: Set", {
+          playlist: [...prev, { ...newVerse }],
+        });
+        localStorage.setItem(
+          "playlist",
+          JSON.stringify({ playlist: [...prev, { ...newVerse }] })
+        );
 
         return [...prev, { ...newVerse }];
       });
@@ -44,6 +54,9 @@ export const usePlaylist = () => {
 
       sendBroadcast("updatePlaylist", { playlist: [...prev] });
 
+      devLogger("Local Storage: Set", { playlist: [...prev] });
+      localStorage.setItem("playlist", JSON.stringify({ playlist: [...prev] }));
+
       return [...prev];
     });
   };
@@ -51,6 +64,9 @@ export const usePlaylist = () => {
   const clearPlaylist = useCallback(() => {
     setPlaylist(() => {
       sendBroadcast("updatePlaylist", { playlist: [] });
+
+      devLogger("Local Storage: Set", { playlist: [] });
+      localStorage.setItem("playlist", JSON.stringify({ playlist: [] }));
 
       return [];
     });

@@ -1,6 +1,7 @@
 import type { SetStateAction } from "react";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import type { SettingsType } from "./useSettings";
+import { devLogger } from "../utils/devUtils";
 
 export enum PresenterMode {
   "Default" = "Default",
@@ -93,6 +94,42 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
   const [broadcasterWindowId] = useState<string>(
     "private-" + Math.random().toString()
   );
+
+  useEffect(function setSettingsFromStorage() {
+    const settingsFromStorage = localStorage.getItem("settings") as unknown as
+      | string
+      | undefined;
+
+    if (settingsFromStorage) {
+      devLogger("Local Storage: Get", JSON.parse(settingsFromStorage));
+      setSettings(JSON.parse(settingsFromStorage) as SettingsType);
+    }
+  }, []);
+
+  useEffect(function setPlaylistFromStorage() {
+    const playlistFromStorage = localStorage.getItem("playlist") as unknown as
+      | string
+      | undefined;
+
+    if (playlistFromStorage) {
+      const playlistObject = JSON.parse(playlistFromStorage) as {
+        playlist: PlaylistType;
+      };
+      devLogger("Local Storage: Get", playlistObject.playlist);
+      setPlaylist(playlistObject.playlist);
+    }
+  }, []);
+
+  useEffect(function setVerseNumberFromStorage() {
+    const currentVerseNumberFromStorage = localStorage.getItem(
+      "currentVerseNumber"
+    ) as unknown as string | undefined;
+
+    if (currentVerseNumberFromStorage) {
+      devLogger("Local Storage: Get", parseInt(currentVerseNumberFromStorage));
+      setCurrentVerseNumber(parseInt(currentVerseNumberFromStorage));
+    }
+  }, []);
 
   return (
     <HookContext.Provider

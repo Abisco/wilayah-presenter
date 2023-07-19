@@ -4,6 +4,7 @@ import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
 import { HookContext } from "./hooksProvider";
 import { useQuranIndex } from "./useQuranIndex";
 import { useSettings } from "./useSettings";
+import { devLogger } from "../utils/devUtils";
 
 /*
   This hook will fetch the verse data from the API
@@ -62,6 +63,9 @@ export const useVerseData = () => {
         sendBroadcast("verseNumberChange", {
           currentVerseNumber: newVerseNumber,
         });
+
+        devLogger("Local Storage: Set verse number", newVerseNumber.toString());
+        localStorage.setItem("currentVerseNumber", newVerseNumber.toString());
       }
 
       setCurrentVerseData({
@@ -117,10 +121,14 @@ export const useVerseData = () => {
   const updateCurrentVerseNumber = useCallback(
     (newVerseNumber: number, updateChannels = true) => {
       setCurrentVerseNumber(newVerseNumber);
-      if (updateChannels)
+      if (updateChannels) {
         sendBroadcast("verseNumberChange", {
           currentVerseNumber: newVerseNumber,
         });
+
+        devLogger("Local Storage: Set verse number", newVerseNumber.toString());
+        localStorage.setItem("currentVerseNumber", newVerseNumber.toString());
+      }
     },
     [sendBroadcast, setCurrentVerseNumber]
   );
