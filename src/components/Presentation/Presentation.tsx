@@ -35,7 +35,7 @@ export const Presentation = ({
         "relative flex h-full w-full flex-col",
         settings.layout === "Third"
           ? "h-[33%] min-h-[33%] overflow-y-auto overflow-x-hidden"
-          : "absolute top-0 h-full"
+          : "absolute top-0 h-full overflow-y-auto"
       )}
       style={{ backgroundColor }}
     >
