@@ -32,7 +32,7 @@ export const ColourPickerPopover = ({
   return (
     <Popover className="relative">
       <Float
-        placement="bottom"
+        placement="right"
         offset={4}
         as="div"
         className="relative"
@@ -46,7 +46,7 @@ export const ColourPickerPopover = ({
         <Popover.Panel className="relative z-10 w-[200px] border bg-gray-300">
           <div className="flex flex-col gap-2 p-2">
             <button
-              className=" rounded border border-gray-300 bg-green-300 px-2 py-1 text-sm transition-all hover:bg-green-500"
+              className="rounded border border-gray-400 bg-gray-100 px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-200"
               onClick={onReset}
             >
               Reset Color
