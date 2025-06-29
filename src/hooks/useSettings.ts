@@ -4,7 +4,7 @@ import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
 import type { PresenterMode } from "./hooksProvider";
 import { HookContext } from "./hooksProvider";
 
-export type LayoutOptions = "Full" | "Third";
+export type LayoutOptions = "Full" | "Third" | "Third-Left";
 
 export interface SettingsType {
   backgroundColor: string;

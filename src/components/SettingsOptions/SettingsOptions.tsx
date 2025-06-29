@@ -41,7 +41,7 @@ export const SettingsOptions = ({
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex justify-between border-b border-[#BFBFBF]">
-            <p className="text-base font-bold">Arabic</p>
+            <p className="text-sm font-bold">Arabic</p>
             <input
               type="checkbox"
               checked={showArabic}
@@ -159,6 +159,25 @@ export const SettingsOptions = ({
               >
                 <p className="bold" style={{ color: translationFontColor }}>
                   Third
+                </p>
+              </div>
+            </button>
+            <button
+              onClick={() => updateSettings({ layout: "Third-Left" })}
+              className={twMerge(
+                "relative flex h-12 w-20 flex-col justify-center bg-[#AFACAC] hover:border hover:border-green-400",
+                layout === "Third-Left" && "border border-green-400"
+              )}
+            >
+              <div
+                className="absolute bottom-0 flex h-1/3 w-4/5 items-center justify-center text-nowrap"
+                style={{ backgroundColor }}
+              >
+                <p
+                  className="bold pl-2"
+                  style={{ color: translationFontColor }}
+                >
+                  ASL
                 </p>
               </div>
             </button>

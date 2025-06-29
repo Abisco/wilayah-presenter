@@ -33,7 +33,7 @@ export const Presentation = ({
     <div
       className={twMerge(
         "relative flex h-full w-full flex-col",
-        settings.layout === "Third"
+        settings.layout === "Third" || settings.layout === "Third-Left"
           ? "h-[33%] min-h-[33%] overflow-y-auto overflow-x-hidden"
           : "absolute top-0 h-full overflow-y-auto"
       )}
@@ -47,18 +47,23 @@ export const Presentation = ({
                 layout: "Third",
               });
             }}
-            className="absolute top-2 right-2 text-white hover:text-gray-300"
+            className="absolute right-2 top-2 z-10 text-white hover:text-gray-300"
           >
             <XCircleIcon className="h-4 w-4" />
           </button>
         </Tooltip>
       )}
       {!currentVerse && isLoading ? (
-        <div className="absolute top-1/2 left-1/2">
+        <div className="absolute left-1/2 top-1/2">
           <LoadingIcon />
         </div>
       ) : (
-        <>
+        <div
+          className={twMerge(
+            "relative flex h-full w-full flex-col",
+            settings.layout === "Third-Left" && "w-4/5"
+          )}
+        >
           <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 px-8 text-white">
             {showArabic && (
               <h3
@@ -85,15 +90,15 @@ export const Presentation = ({
             className="absolute bottom-4 left-5 text-white"
             style={{ fontSize: 18 * textScale }}
           >
-            {surahData?.surahNameArabic}
+            {surahData?.surahNameTransliteration}
           </p>
           <p
             className="absolute bottom-4 right-5 text-white"
             style={{ fontSize: 18 * textScale }}
           >
-            {surahData?.surahNameEnglish}
+            ({surahData?.surahNumber}) {surahData?.surahNameEnglish}
           </p>
-        </>
+        </div>
       )}
     </div>
   );

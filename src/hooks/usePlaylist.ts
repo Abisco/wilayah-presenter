@@ -7,7 +7,7 @@ import { useSettings } from "./useSettings";
 import { useVerseData } from "./useVerseData";
 import { devLogger } from "../utils/devUtils";
 
-export type LayoutOptions = "Full" | "Third";
+export type LayoutOptions = "Full" | "Third" | "Third-Left";
 
 export const usePlaylist = () => {
   const { playlist, setPlaylist } = useContext(HookContext);
