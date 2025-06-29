@@ -125,6 +125,7 @@ export const SettingsOptions = ({
                   arabicFontColor: "white",
                 });
               }}
+              className="text-xs text-gray-500 underline transition-colors hover:text-gray-700"
             >
               Reset All
             </button>
@@ -134,10 +135,11 @@ export const SettingsOptions = ({
               colour={backgroundColor}
               onChange={(colour) => updateSettings({ backgroundColor: colour })}
               trigger={
-                <button
-                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
-                  style={{ borderColor: backgroundColor }}
-                >
+                <button className="flex items-center gap-1.5 rounded border border-gray-400 bg-gray-100 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-200">
+                  <div
+                    className="h-2.5 w-2.5 rounded border border-gray-300"
+                    style={{ backgroundColor }}
+                  />
                   Background
                 </button>
               }
@@ -151,10 +153,11 @@ export const SettingsOptions = ({
                 updateSettings({ translationFontColor: colour })
               }
               trigger={
-                <button
-                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
-                  style={{ borderColor: translationFontColor }}
-                >
+                <button className="flex items-center gap-1.5 rounded border border-gray-400 bg-gray-100 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-200">
+                  <div
+                    className="h-2.5 w-2.5 rounded border border-gray-300"
+                    style={{ backgroundColor: translationFontColor }}
+                  />
                   Translation
                 </button>
               }
@@ -166,10 +169,11 @@ export const SettingsOptions = ({
               colour={arabicFontColor}
               onChange={(colour) => updateSettings({ arabicFontColor: colour })}
               trigger={
-                <button
-                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
-                  style={{ borderColor: arabicFontColor }}
-                >
+                <button className="flex items-center gap-1.5 rounded border border-gray-400 bg-gray-100 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-200">
+                  <div
+                    className="h-2.5 w-2.5 rounded border border-gray-300"
+                    style={{ backgroundColor: arabicFontColor }}
+                  />
                   Arabic
                 </button>
               }
