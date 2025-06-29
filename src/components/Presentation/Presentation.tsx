@@ -27,6 +27,8 @@ export const Presentation = ({
     backgroundColor,
     translationFontSize,
     translationLanguage,
+    arabicFontColor,
+    translationFontColor,
   } = settings;
 
   return (
@@ -64,11 +66,16 @@ export const Presentation = ({
             settings.layout === "Third-Left" && "w-4/5"
           )}
         >
-          <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 px-8 text-white">
+          <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 px-8">
             {showArabic && (
               <h3
-                className="text-center font-serif"
-                style={{ fontSize: arabicFontSize * textScale }}
+                className="text-center font-serif drop-shadow-md"
+                style={{
+                  fontSize: arabicFontSize * textScale,
+                  color: arabicFontColor,
+                  textShadow:
+                    "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",
+                }}
               >
                 <span>{currentVerse?.ARABIC} </span>
                 <span>
@@ -78,8 +85,13 @@ export const Presentation = ({
             )}
             {showTranslation && (
               <h3
-                className="flex text-center"
-                style={{ fontSize: translationFontSize * textScale }}
+                className="flex text-center drop-shadow-md"
+                style={{
+                  fontSize: translationFontSize * textScale,
+                  color: translationFontColor,
+                  textShadow:
+                    "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",
+                }}
               >
                 {currentVerse?.[translationLanguage]} (
                 {currentVerse?.surahNumber}:{currentVerse?.verseNumber})
@@ -87,14 +99,24 @@ export const Presentation = ({
             )}
           </div>
           <p
-            className="absolute bottom-4 left-5 text-white"
-            style={{ fontSize: 18 * textScale }}
+            className="absolute bottom-4 left-5 text-white drop-shadow-md"
+            style={{
+              fontSize: 18 * textScale,
+              color: translationFontColor,
+              textShadow:
+                "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",
+            }}
           >
             {surahData?.surahNameTransliteration}
           </p>
           <p
-            className="absolute bottom-4 right-5 text-white"
-            style={{ fontSize: 18 * textScale }}
+            className="absolute bottom-4 right-5 text-white drop-shadow-md"
+            style={{
+              fontSize: 18 * textScale,
+              color: translationFontColor,
+              textShadow:
+                "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",
+            }}
           >
             ({surahData?.surahNumber}) {surahData?.surahNameEnglish}
           </p>

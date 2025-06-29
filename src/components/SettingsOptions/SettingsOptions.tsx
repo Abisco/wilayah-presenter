@@ -5,6 +5,7 @@ import { useQuranIndex } from "../../hooks/useQuranIndex";
 import { useSettings } from "../../hooks/useSettings";
 import { Combobox } from "../Combobox/Combobox";
 import { OptionsBox } from "../OptionsBox/OptionsBox";
+import { ColourPickerPopover } from "../ColourPicker/ColourPicker";
 
 interface SettingsOptionsProps {
   expandable?: boolean;
@@ -19,11 +20,11 @@ export const SettingsOptions = ({
   const {
     showArabic,
     showTranslation,
+    arabicFontColor,
     translationFontColor,
     translationFontSize,
     arabicFontSize,
     arabicSource,
-    translationLanguage,
     translationSource,
     layout,
     backgroundColor,
@@ -39,6 +40,129 @@ export const SettingsOptions = ({
       expandable={expandable}
     >
       <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between border-b border-[#BFBFBF]">
+            <p className="text-base font-bold">Layout</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => updateSettings({ layout: "Full" })}
+              className={twMerge(
+                "relative flex h-12 w-20 flex-col items-center justify-center bg-[#AFACAC] hover:border hover:border-green-400",
+                layout === "Full" && "border border-green-400"
+              )}
+            >
+              <div
+                className="absolute flex h-full w-full items-center justify-center"
+                style={{ backgroundColor }}
+              >
+                <p className="bold" style={{ color: translationFontColor }}>
+                  Full
+                </p>
+              </div>
+            </button>
+            <button
+              onClick={() => updateSettings({ layout: "Third" })}
+              className={twMerge(
+                "relative flex h-12 w-20 flex-col items-center justify-center bg-[#AFACAC] hover:border hover:border-green-400",
+                layout === "Third" && "border border-green-400"
+              )}
+            >
+              <div
+                className="absolute bottom-0 flex h-1/3 w-full items-center justify-center"
+                style={{ backgroundColor }}
+              >
+                <p className="bold" style={{ color: translationFontColor }}>
+                  Third
+                </p>
+              </div>
+            </button>
+            <button
+              onClick={() => updateSettings({ layout: "Third-Left" })}
+              className={twMerge(
+                "relative flex h-12 w-20 flex-col justify-center bg-[#AFACAC] hover:border hover:border-green-400",
+                layout === "Third-Left" && "border border-green-400"
+              )}
+            >
+              <div
+                className="absolute bottom-0 flex h-1/3 w-4/5 items-center justify-center text-nowrap"
+                style={{ backgroundColor }}
+              >
+                <p
+                  className="bold pl-2"
+                  style={{ color: translationFontColor }}
+                >
+                  ASL
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between border-b border-[#BFBFBF]">
+            <p className="text-base font-bold">Colour</p>
+            <button
+              onClick={() => {
+                updateSettings({
+                  backgroundColor: "black",
+                  translationFontColor: "white",
+                  arabicFontColor: "white",
+                });
+              }}
+            >
+              Reset All
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <ColourPickerPopover
+              colour={backgroundColor}
+              onChange={(colour) => updateSettings({ backgroundColor: colour })}
+              trigger={
+                <button
+                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
+                  style={{ borderColor: backgroundColor }}
+                >
+                  Background
+                </button>
+              }
+              onReset={() => {
+                updateSettings({ backgroundColor: "black" });
+              }}
+            />
+            <ColourPickerPopover
+              colour={translationFontColor}
+              onChange={(colour) =>
+                updateSettings({ translationFontColor: colour })
+              }
+              trigger={
+                <button
+                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
+                  style={{ borderColor: translationFontColor }}
+                >
+                  Translation
+                </button>
+              }
+              onReset={() => {
+                updateSettings({ translationFontColor: "white" });
+              }}
+            />
+            <ColourPickerPopover
+              colour={arabicFontColor}
+              onChange={(colour) => updateSettings({ arabicFontColor: colour })}
+              trigger={
+                <button
+                  className="rounded border border-gray-300 px-2 py-1 text-sm hover:bg-gray-300"
+                  style={{ borderColor: arabicFontColor }}
+                >
+                  Arabic
+                </button>
+              }
+              onReset={() => {
+                updateSettings({ arabicFontColor: "white" });
+              }}
+            />
+          </div>
+        </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between border-b border-[#BFBFBF]">
             <p className="text-sm font-bold">Arabic</p>
@@ -123,64 +247,6 @@ export const SettingsOptions = ({
                 updateSettings({ translationSource: newSource.value })
               }
             />
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between border-b border-[#BFBFBF]">
-            <p className="text-base font-bold">Layout</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => updateSettings({ layout: "Full" })}
-              className={twMerge(
-                "relative flex h-12 w-20 flex-col items-center justify-center bg-[#AFACAC] hover:border hover:border-green-400",
-                layout === "Full" && "border border-green-400"
-              )}
-            >
-              <div
-                className="absolute flex h-full w-full items-center justify-center"
-                style={{ backgroundColor }}
-              >
-                <p className="bold" style={{ color: translationFontColor }}>
-                  Full
-                </p>
-              </div>
-            </button>
-            <button
-              onClick={() => updateSettings({ layout: "Third" })}
-              className={twMerge(
-                "relative flex h-12 w-20 flex-col items-center justify-center bg-[#AFACAC] hover:border hover:border-green-400",
-                layout === "Third" && "border border-green-400"
-              )}
-            >
-              <div
-                className="absolute bottom-0 flex h-1/3 w-full items-center justify-center"
-                style={{ backgroundColor }}
-              >
-                <p className="bold" style={{ color: translationFontColor }}>
-                  Third
-                </p>
-              </div>
-            </button>
-            <button
-              onClick={() => updateSettings({ layout: "Third-Left" })}
-              className={twMerge(
-                "relative flex h-12 w-20 flex-col justify-center bg-[#AFACAC] hover:border hover:border-green-400",
-                layout === "Third-Left" && "border border-green-400"
-              )}
-            >
-              <div
-                className="absolute bottom-0 flex h-1/3 w-4/5 items-center justify-center text-nowrap"
-                style={{ backgroundColor }}
-              >
-                <p
-                  className="bold pl-2"
-                  style={{ color: translationFontColor }}
-                >
-                  ASL
-                </p>
-              </div>
-            </button>
           </div>
         </div>
       </div>

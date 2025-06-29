@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@headlessui-float/react": "^0.10.1",
-    "@headlessui/react": "^1.7.10",
+    "@headlessui/react": "1.7.10",
     "@heroicons/react": "^2.0.14",
     "@prisma/client": "^4.8.0",
     "@radix-ui/react-dropdown-menu": "^2.0.2",
@@ -29,6 +29,7 @@
     "broadcast-channel": "^4.20.2",
     "next": "13.1.2",
     "react": "18.2.0",
+    "react-colorful": "^5.6.1",
     "react-dom": "18.2.0",
     "react-hotkeys-hook": "^4.3.5",
     "superjson": "1.9.1",
