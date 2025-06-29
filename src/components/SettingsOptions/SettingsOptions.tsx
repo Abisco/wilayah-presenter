@@ -62,6 +62,22 @@ export const SettingsOptions = ({
               </div>
             </button>
             <button
+              onClick={() => updateSettings({ layout: "Presenter-Left" })}
+              className={twMerge(
+                "relative flex h-12 w-20 flex-col justify-center bg-[#AFACAC] hover:border hover:border-green-400",
+                layout === "Presenter-Left" && "border border-green-400"
+              )}
+            >
+              <div
+                className="absolute flex h-full w-3/4 items-center justify-center"
+                style={{ backgroundColor }}
+              >
+                <p className="bold" style={{ color: translationFontColor }}>
+                  Full-Left
+                </p>
+              </div>
+            </button>
+            <button
               onClick={() => updateSettings({ layout: "Third" })}
               className={twMerge(
                 "relative flex h-12 w-20 flex-col items-center justify-center bg-[#AFACAC] hover:border hover:border-green-400",

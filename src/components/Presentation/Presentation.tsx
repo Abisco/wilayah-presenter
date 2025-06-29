@@ -35,13 +35,14 @@ export const Presentation = ({
     <div
       className={twMerge(
         "relative flex h-full w-full flex-col",
-        settings.layout === "Third" || settings.layout === "Third-Left"
-          ? "h-[33%] min-h-[33%] overflow-y-auto overflow-x-hidden"
-          : "absolute top-0 h-full overflow-y-auto"
+        (settings.layout === "Third" || settings.layout === "Third-Left") &&
+          "h-[33%] min-h-[33%] overflow-y-auto overflow-x-hidden",
+        (settings.layout === "Full" || settings.layout === "Presenter-Left") &&
+          "absolute top-0 h-full overflow-y-auto"
       )}
       style={{ backgroundColor }}
     >
-      {settings.layout === "Full" && (
+      {(settings.layout === "Full" || settings.layout === "Presenter-Left") && (
         <Tooltip text="Close full screen">
           <button
             onClick={() => {
@@ -63,7 +64,8 @@ export const Presentation = ({
         <div
           className={twMerge(
             "relative flex h-full w-full flex-col",
-            settings.layout === "Third-Left" && "w-4/5"
+            settings.layout === "Third-Left" && "w-4/5",
+            settings.layout === "Presenter-Left" && "w-3/4"
           )}
         >
           <div className="flex flex-grow flex-col items-center justify-center gap-2 p-1 px-8">

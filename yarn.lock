@@ -8075,6 +8075,7 @@ jest-haste-map@^26.6.2:
   dependencies:
     "@jest/types" "^26.6.2"
     "@types/graceful-fs" "^4.1.2"
+    "@types/node" "*"
     anymatch "^3.0.3"
     fb-watchman "^2.0.0"
     graceful-fs "^4.2.4"
