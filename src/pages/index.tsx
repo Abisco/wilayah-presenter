@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   const { currentVerse, verseData } = useVerseData();
   const { getSurahData } = useQuranIndex();
   const { settings } = useSettings();
-
+  const { settingsAreaBackgroundColor } = settings;
   useInitializeHotkeys();
   const { setupBroadcasts } = useInitBroadcasts();
 
@@ -38,7 +38,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-hidden bg-white">
+      <main
+        className="max-w-screen flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-hidden "
+        style={{ backgroundColor: settingsAreaBackgroundColor }}
+      >
         <Toolbar />
         <div className="flex h-[calc(100vh-80px)] flex-col justify-between">
           <div className="flex max-h-[60%] flex-grow items-center justify-between gap-3 px-4 py-1">

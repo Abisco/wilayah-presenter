@@ -10,6 +10,7 @@ export enum PresenterMode {
 
 export const DefaultSettings: SettingsType = {
   backgroundColor: "black",
+  settingsAreaBackgroundColor: "white",
   showArabic: true,
   arabicSource: "Simple Enhanced",
   arabicFontSize: 32,

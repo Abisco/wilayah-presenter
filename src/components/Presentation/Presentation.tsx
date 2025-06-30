@@ -64,7 +64,7 @@ export const Presentation = ({
         <div
           className={twMerge(
             "relative flex h-full w-full flex-col",
-            settings.layout === "Third-Left" && "w-4/5",
+            settings.layout === "Third-Left" && "w-3/4",
             settings.layout === "Presenter-Left" && "w-3/4"
           )}
         >

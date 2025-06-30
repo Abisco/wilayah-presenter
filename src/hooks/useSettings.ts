@@ -8,6 +8,7 @@ export type LayoutOptions = "Full" | "Third" | "Third-Left" | "Presenter-Left";
 
 export interface SettingsType {
   backgroundColor: string;
+  settingsAreaBackgroundColor: string;
   showArabic: boolean;
   arabicFontSize: number;
   arabicFontColor: string;

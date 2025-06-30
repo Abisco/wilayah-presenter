@@ -28,6 +28,7 @@ export const SettingsOptions = ({
     translationSource,
     layout,
     backgroundColor,
+    settingsAreaBackgroundColor,
   } = settings;
   const fontSizeOptions = Array(20)
     .fill(0)
@@ -179,6 +180,24 @@ export const SettingsOptions = ({
               }
               onReset={() => {
                 updateSettings({ arabicFontColor: "white" });
+              }}
+            />
+            <ColourPickerPopover
+              colour={settingsAreaBackgroundColor}
+              onChange={(colour) =>
+                updateSettings({ settingsAreaBackgroundColor: colour })
+              }
+              trigger={
+                <button className="flex items-center gap-1.5 rounded border border-gray-400 bg-gray-100 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-200">
+                  <div
+                    className="h-2.5 w-2.5 rounded border border-gray-300"
+                    style={{ backgroundColor: settingsAreaBackgroundColor }}
+                  />
+                  Settings
+                </button>
+              }
+              onReset={() => {
+                updateSettings({ settingsAreaBackgroundColor: "white" });
               }}
             />
           </div>
