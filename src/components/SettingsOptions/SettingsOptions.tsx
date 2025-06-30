@@ -124,6 +124,7 @@ export const SettingsOptions = ({
                   backgroundColor: "black",
                   translationFontColor: "white",
                   arabicFontColor: "white",
+                  settingsAreaBackgroundColor: "white",
                 });
               }}
               className="text-xs text-gray-500 underline transition-colors hover:text-gray-700"
