@@ -25,6 +25,7 @@ const PRESET_COLOURS = [
 ];
 
 const isValidHex = (hex: string): boolean => {
+  return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
 };
 
 export const ColourPickerPopover = ({
