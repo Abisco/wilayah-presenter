@@ -9,17 +9,17 @@ export enum PresenterMode {
 }
 
 export const DefaultSettings: SettingsType = {
-  backgroundColor: "black",
-  settingsAreaBackgroundColor: "white",
+  backgroundColor: "#000000",
+  settingsAreaBackgroundColor: "#ffffff",
   showArabic: true,
   arabicSource: "Simple Enhanced",
   arabicFontSize: 32,
-  arabicFontColor: "white",
+  arabicFontColor: "#ffffff",
   showTranslation: true,
   translationLanguage: "ENGLISH",
   translationSource: "Shakir",
   translationFontSize: 22,
-  translationFontColor: "white",
+  translationFontColor: "#ffffff",
   layout: "Third",
   mode: PresenterMode.Default,
 };

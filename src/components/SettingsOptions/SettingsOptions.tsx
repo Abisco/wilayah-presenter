@@ -121,10 +121,10 @@ export const SettingsOptions = ({
             <button
               onClick={() => {
                 updateSettings({
-                  backgroundColor: "black",
-                  translationFontColor: "white",
-                  arabicFontColor: "white",
-                  settingsAreaBackgroundColor: "white",
+                  backgroundColor: "#000000",
+                  translationFontColor: "#ffffff",
+                  arabicFontColor: "#ffffff",
+                  settingsAreaBackgroundColor: "#ffffff",
                 });
               }}
               className="text-xs text-gray-500 underline transition-colors hover:text-gray-700"
@@ -146,7 +146,7 @@ export const SettingsOptions = ({
                 </button>
               }
               onReset={() => {
-                updateSettings({ backgroundColor: "black" });
+                updateSettings({ backgroundColor: "#000000" });
               }}
             />
             <ColourPickerPopover
@@ -164,7 +164,7 @@ export const SettingsOptions = ({
                 </button>
               }
               onReset={() => {
-                updateSettings({ translationFontColor: "white" });
+                updateSettings({ translationFontColor: "#ffffff" });
               }}
             />
             <ColourPickerPopover
@@ -180,7 +180,7 @@ export const SettingsOptions = ({
                 </button>
               }
               onReset={() => {
-                updateSettings({ arabicFontColor: "white" });
+                updateSettings({ arabicFontColor: "#ffffff" });
               }}
             />
             <ColourPickerPopover
@@ -198,7 +198,7 @@ export const SettingsOptions = ({
                 </button>
               }
               onReset={() => {
-                updateSettings({ settingsAreaBackgroundColor: "white" });
+                updateSettings({ settingsAreaBackgroundColor: "#ffffff" });
               }}
             />
           </div>

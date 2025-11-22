@@ -1,6 +1,7 @@
 import { HexColorPicker } from "react-colorful";
 import { Popover } from "@headlessui/react";
 import { Float } from "@headlessui-float/react";
+import { useState, useEffect } from "react";
 
 type ColourPickerPopoverProps = {
   colour: string;
@@ -23,12 +24,37 @@ const PRESET_COLOURS = [
   "#8B4513", // Brown (earth, humility)
 ];
 
+const isValidHex = (hex: string): boolean => {
+};
+
 export const ColourPickerPopover = ({
   colour,
   onChange,
   trigger,
   onReset,
 }: ColourPickerPopoverProps) => {
+  const [hexInput, setHexInput] = useState(colour);
+
+  // Sync input with color prop when it changes externally
+  useEffect(() => {
+    setHexInput(colour);
+  }, [colour]);
+
+  const handleHexInputChange = (value: string) => {
+    setHexInput(value);
+    // Update color if valid hex code
+    if (isValidHex(value)) {
+      onChange(value);
+    }
+  };
+
+  const handleHexInputBlur = () => {
+    // If input is invalid on blur, reset to current color
+    if (!isValidHex(hexInput)) {
+      setHexInput(colour);
+    }
+  };
+
   return (
     <Popover className="relative">
       <Float
@@ -45,6 +71,24 @@ export const ColourPickerPopover = ({
 
         <Popover.Panel className="relative z-10 w-[200px] border bg-gray-300">
           <div className="flex flex-col gap-2 p-2">
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="hex-input"
+                className="text-xs font-medium text-gray-700"
+              >
+                Hex Color
+              </label>
+              <input
+                id="hex-input"
+                type="text"
+                value={hexInput}
+                onChange={(e) => handleHexInputChange(e.target.value)}
+                onBlur={handleHexInputBlur}
+                placeholder="#000000"
+                className="rounded border border-gray-400 bg-white px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+              />
+            </div>
             <button
               className="rounded border border-gray-400 bg-gray-100 px-2 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-200"
               onClick={onReset}
