@@ -12,7 +12,8 @@
     "build-storybook": "build-storybook"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    "seed-qarai": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed-qarai.ts"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
