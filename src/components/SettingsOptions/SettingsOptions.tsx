@@ -1,4 +1,4 @@
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { useQuranIndex } from "../../hooks/useQuranIndex";
@@ -6,6 +6,8 @@ import { useSettings } from "../../hooks/useSettings";
 import { Combobox } from "../Combobox/Combobox";
 import { OptionsBox } from "../OptionsBox/OptionsBox";
 import { ColourPickerPopover } from "../ColourPicker/ColourPicker";
+import { SettingsTemplates } from "../SettingsTemplates/SettingsTemplates";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 interface SettingsOptionsProps {
   expandable?: boolean;
@@ -39,6 +41,21 @@ export const SettingsOptions = ({
       icon={<Cog6ToothIcon />}
       name="Settings"
       expandable={expandable}
+      headerAction={
+        <SettingsTemplates
+          trigger={
+            <Tooltip text="Settings Templates">
+              <button
+                className="h-auto w-6 text-gray-500 transition-colors hover:text-gray-900"
+                title="Settings Templates"
+                aria-label="Settings Templates"
+              >
+                <BookmarkIcon className="h-full w-full" />
+              </button>
+            </Tooltip>
+          }
+        />
+      }
     >
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2">
@@ -205,8 +222,11 @@ export const SettingsOptions = ({
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between border-b border-[#BFBFBF]">
-            <p className="text-sm font-bold">Arabic</p>
+            <label htmlFor="show-arabic-checkbox" className="text-sm font-bold">
+              Arabic
+            </label>
             <input
+              id="show-arabic-checkbox"
               type="checkbox"
               checked={showArabic}
               onChange={() => updateSettings({ showArabic: !showArabic })}
@@ -246,8 +266,14 @@ export const SettingsOptions = ({
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between border-b border-[#BFBFBF]">
-            <p className="text-base font-bold">English</p>
+            <label
+              htmlFor="show-translation-checkbox"
+              className="text-base font-bold"
+            >
+              English
+            </label>
             <input
+              id="show-translation-checkbox"
               type="checkbox"
               checked={showTranslation}
               onChange={() =>

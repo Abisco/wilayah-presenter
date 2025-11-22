@@ -2,7 +2,8 @@ import { devLogger } from "./../utils/devUtils";
 import { useCallback, useContext } from "react";
 import { useBroadcastHandlerHook } from "./broadcastHandlerHook";
 import type { PresenterMode } from "./hooksProvider";
-import { HookContext } from "./hooksProvider";
+import { HookContext, DefaultSettings } from "./hooksProvider";
+import { useLocalStorage } from "./useLocalStorage";
 
 export type LayoutOptions = "Full" | "Third" | "Third-Left" | "Presenter-Left";
 
@@ -22,9 +23,20 @@ export interface SettingsType {
   mode: PresenterMode;
 }
 
+export interface SettingsTemplate {
+  id: string;
+  name: string;
+  settings: SettingsType;
+  createdAt: number;
+}
+
 export const useSettings = () => {
   const { settings, setSettings } = useContext(HookContext);
   const { sendBroadcast } = useBroadcastHandlerHook();
+  const { getItem: getTemplatesFromStorage, setItem: setTemplatesToStorage } =
+    useLocalStorage<SettingsTemplate[]>("settingsTemplates");
+  const { setItem: setSettingsToStorage } =
+    useLocalStorage<SettingsType>("settings");
 
   const updateSettings = useCallback(
     (newSettings: Partial<SettingsType>, updateChannels = true) => {
@@ -34,12 +46,10 @@ export const useSettings = () => {
         }
 
         if (updateChannels) {
-          sendBroadcast("updateSettings", { ...prev, ...newSettings });
-          devLogger("Local Storage: Set", { ...prev, ...newSettings });
-          localStorage.setItem(
-            "settings",
-            JSON.stringify({ ...prev, ...newSettings })
-          );
+          const updatedSettings = { ...prev, ...newSettings };
+          sendBroadcast("updateSettings", updatedSettings);
+          devLogger("Local Storage: Set", updatedSettings);
+          setSettingsToStorage(updatedSettings);
         }
 
         return {
@@ -48,7 +58,7 @@ export const useSettings = () => {
         };
       });
     },
-    [sendBroadcast, setSettings]
+    [sendBroadcast, setSettings, setSettingsToStorage]
   );
 
   const changeSize = (
@@ -67,10 +77,64 @@ export const useSettings = () => {
     return sources;
   }, [settings.arabicSource, settings.translationSource]);
 
+  const getTemplates = useCallback((): SettingsTemplate[] => {
+    const item = getTemplatesFromStorage();
+    return item ?? [];
+  }, [getTemplatesFromStorage]);
+
+  const saveTemplate = useCallback(
+    (name: string): SettingsTemplate => {
+      const templates = getTemplates();
+      const newTemplate: SettingsTemplate = {
+        id: `template-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        name,
+        settings: { ...settings },
+        createdAt: Date.now(),
+      };
+      const updatedTemplates = [...templates, newTemplate];
+      setTemplatesToStorage(updatedTemplates);
+      devLogger("Local Storage: Save Template", newTemplate);
+      return newTemplate;
+    },
+    [settings, getTemplates, setTemplatesToStorage]
+  );
+
+  const loadTemplate = useCallback(
+    (templateId: string) => {
+      const templates = getTemplates();
+      const template = templates.find((t) => t.id === templateId);
+      if (template) {
+        updateSettings(template.settings);
+        devLogger("Local Storage: Load Template", template);
+      }
+    },
+    [getTemplates, updateSettings]
+  );
+
+  const deleteTemplate = useCallback(
+    (templateId: string) => {
+      const templates = getTemplates();
+      const updatedTemplates = templates.filter((t) => t.id !== templateId);
+      setTemplatesToStorage(updatedTemplates);
+      devLogger("Local Storage: Delete Template", templateId);
+    },
+    [getTemplates, setTemplatesToStorage]
+  );
+
+  const loadDefaultSettings = useCallback(() => {
+    updateSettings(DefaultSettings);
+    devLogger("Load Default Settings", DefaultSettings);
+  }, [updateSettings]);
+
   return {
     settings,
     updateSettings,
     changeSize,
     getSources,
+    getTemplates,
+    saveTemplate,
+    loadTemplate,
+    deleteTemplate,
+    loadDefaultSettings,
   };
 };

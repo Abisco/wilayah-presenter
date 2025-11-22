@@ -8,6 +8,7 @@ interface OptionsBoxProps {
   expandable?: boolean;
   children: React.ReactNode;
   className?: string;
+  headerAction?: React.ReactNode;
 }
 
 /**
@@ -22,6 +23,7 @@ export const OptionsBox = ({
   action,
   actionIcon,
   actionTooltip,
+  headerAction,
 }: OptionsBoxProps & OptionsTitleProps) => {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -33,13 +35,16 @@ export const OptionsBox = ({
       )}
     >
       <div className="flex items-center justify-between">
-        <OptionsTitle
-          name={name}
-          icon={icon}
-          action={action}
-          actionIcon={actionIcon}
-          actionTooltip={actionTooltip}
-        />
+        <div className="flex w-full items-center justify-between gap-2">
+          <OptionsTitle
+            name={name}
+            icon={icon}
+            action={action}
+            actionIcon={actionIcon}
+            actionTooltip={actionTooltip}
+          />
+          {headerAction}
+        </div>
         {expandable && (
           <button
             onClick={() => setExpanded(!expanded)}
