@@ -12,11 +12,13 @@ export interface SettingsType {
   settingsAreaBackgroundColor: string;
   showArabic: boolean;
   arabicFontSize: number;
+  arabicLineHeight: number;
   arabicFontColor: string;
   arabicSource: string;
   showTranslation: boolean;
   translationLanguage: "ENGLISH" | "URDU" | "FRENCH";
   translationFontSize: number;
+  translationLineHeight: number;
   translationFontColor: string;
   translationSource: string;
   layout: LayoutOptions;
@@ -104,7 +106,7 @@ export const useSettings = () => {
       const templates = getTemplates();
       const template = templates.find((t) => t.id === templateId);
       if (template) {
-        updateSettings(template.settings);
+        updateSettings({ ...DefaultSettings, ...template.settings });
         devLogger("Local Storage: Load Template", template);
       }
     },
