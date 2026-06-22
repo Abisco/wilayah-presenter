@@ -14,11 +14,13 @@ export const DefaultSettings: SettingsType = {
   showArabic: true,
   arabicSource: "Simple Enhanced",
   arabicFontSize: 32,
+  arabicLineHeight: 1.2,
   arabicFontColor: "#ffffff",
   showTranslation: true,
   translationLanguage: "ENGLISH",
   translationSource: "Shakir",
   translationFontSize: 22,
+  translationLineHeight: 1.2,
   translationFontColor: "#ffffff",
   layout: "Third",
   mode: PresenterMode.Default,
@@ -102,8 +104,12 @@ export const HookProvider = ({ children }: { children: React.ReactNode }) => {
       | undefined;
 
     if (settingsFromStorage) {
-      devLogger("Local Storage: Get", JSON.parse(settingsFromStorage));
-      setSettings(JSON.parse(settingsFromStorage) as SettingsType);
+      const parsedSettings = JSON.parse(
+        settingsFromStorage
+      ) as Partial<SettingsType>;
+      const settingsWithDefaults = { ...DefaultSettings, ...parsedSettings };
+      devLogger("Local Storage: Get", settingsWithDefaults);
+      setSettings(settingsWithDefaults);
     }
   }, []);
 

@@ -23,9 +23,11 @@ export const Presentation = ({
   const {
     showArabic,
     arabicFontSize,
+    arabicLineHeight,
     showTranslation,
     backgroundColor,
     translationFontSize,
+    translationLineHeight,
     translationLanguage,
     arabicFontColor,
     translationFontColor,
@@ -74,6 +76,7 @@ export const Presentation = ({
                 className="text-center font-serif drop-shadow-md"
                 style={{
                   fontSize: arabicFontSize * textScale,
+                  lineHeight: arabicLineHeight,
                   color: arabicFontColor,
                   textShadow:
                     "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",
@@ -90,6 +93,7 @@ export const Presentation = ({
                 className="flex text-center drop-shadow-md"
                 style={{
                   fontSize: translationFontSize * textScale,
+                  lineHeight: translationLineHeight,
                   color: translationFontColor,
                   textShadow:
                     "1px 1px 2px rgba(0, 0, 0, 0.6), -1px -1px 1px rgba(255, 255, 255, 0.2)",

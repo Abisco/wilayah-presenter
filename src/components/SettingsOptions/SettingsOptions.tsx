@@ -13,6 +13,37 @@ interface SettingsOptionsProps {
   expandable?: boolean;
 }
 
+interface LineSpacingSliderProps {
+  id: string;
+  value: number;
+  onChange: (lineHeight: number) => void;
+}
+
+const LineSpacingSlider = ({ id, value, onChange }: LineSpacingSliderProps) => {
+  return (
+    <div className="flex items-center justify-between gap-6">
+      <label htmlFor={id} className="text-sm">
+        Line Spacing
+      </label>
+      <div className="flex items-center gap-2">
+        <input
+          id={id}
+          type="range"
+          min={0.8}
+          max={2}
+          step={0.05}
+          value={value}
+          onChange={(event) => onChange(parseFloat(event.target.value))}
+          className="w-24 accent-gray-700"
+        />
+        <span className="w-10 text-right text-xs text-gray-600">
+          {value.toFixed(2)}x
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export const SettingsOptions = ({
   expandable = false,
 }: SettingsOptionsProps) => {
@@ -25,7 +56,9 @@ export const SettingsOptions = ({
     arabicFontColor,
     translationFontColor,
     translationFontSize,
+    translationLineHeight,
     arabicFontSize,
+    arabicLineHeight,
     arabicSource,
     translationSource,
     layout,
@@ -245,6 +278,13 @@ export const SettingsOptions = ({
               }
             />
           </div>
+          <LineSpacingSlider
+            id="arabic-line-spacing-slider"
+            value={arabicLineHeight}
+            onChange={(arabicLineHeight) =>
+              updateSettings({ arabicLineHeight })
+            }
+          />
           <div className="flex items-center justify-between gap-6">
             <p className="text-sm">Font Style</p>
             <Combobox
@@ -296,6 +336,13 @@ export const SettingsOptions = ({
               }
             />
           </div>
+          <LineSpacingSlider
+            id="translation-line-spacing-slider"
+            value={translationLineHeight}
+            onChange={(translationLineHeight) =>
+              updateSettings({ translationLineHeight })
+            }
+          />
           <div className="flex items-center justify-between gap-6">
             <p className="text-sm">Source</p>
             <Combobox
